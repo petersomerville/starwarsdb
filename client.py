@@ -6,3 +6,10 @@ from base import DbManager
 
 db = DbManager()
 
+def get_json(url):
+    print("GET\t<{}>".format(url))
+    response = requests.get(url)
+    return json.loads(response.text)
+
+person_url = 'https://swapi.co/api/people/1'
+results = db.open().query(Person).filter(Person.url == person_url)
