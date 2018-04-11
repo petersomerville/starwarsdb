@@ -19,7 +19,7 @@ for person in range(1,87):
         json_data = get_json(person_url)
 
         person = Person()
-        if 'detail' in json_data:
+        if 'detail' not in json_data:
             person.name = json_data["name"]
             person.url = person_url
             person.height = json_data["height"]

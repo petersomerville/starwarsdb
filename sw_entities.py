@@ -18,6 +18,13 @@ class Person(Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
+    def parse_person(self, json_data):
+        
+
+
+    
+
+
 
 class Planet(Base):
     __tablename__ = 'planet'
