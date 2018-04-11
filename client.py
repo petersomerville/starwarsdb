@@ -12,7 +12,7 @@ def get_json(url):
     return json.loads(response.text)
 
 for person in range(20,30):
-    person_url = 'https://swapi.co/api/people/{}'.format(person)
+    person_url = 'https://swapi.co/api/people/{}/'.format(person)
     results = db.open().query(Person).filter(Person.url == person_url).all()
     if len(results) == 0:   
         
@@ -25,7 +25,7 @@ for person in range(20,30):
             db.save(person)
 
 for planet in range(1,10):
-    planet_url = 'https://swapi.co/api/planets/{}'.format(planet)
+    planet_url = 'https://swapi.co/api/planets/{}/'.format(planet)
     results = db.open().query(Planet).filter(Planet.url == planet_url).all()
     if len(results) == 0:
     
@@ -37,8 +37,8 @@ for planet in range(1,10):
 
             db.save(planet)
 
-for vehicle in range(14,24):
-    vehicle_url = 'https://swapi.co/api/vehicles/{}'.format(vehicle)
+for i in range(14,24):
+    vehicle_url = 'https://swapi.co/api/vehicles/{}/'.format(i)
     results = db.open().query(Vehicle).filter(Vehicle.url == vehicle_url).all()
     if len(results) == 0:
     
