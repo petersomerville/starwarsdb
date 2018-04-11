@@ -11,44 +11,45 @@ def get_json(url):
     response = requests.get(url)
     return json.loads(response.text)
 
-person_url = 'https://swapi.co/api/people/1'
-results = db.open().query(Person).filter(Person.url == person_url)
-if len(results) == 0:
+for person in range(1,87):
+    person_url = 'https://swapi.co/api/people/{}'.format(person)
+    results = db.open().query(Person).filter(Person.url == person_url).all()
+    if len(results) == 0:
+        
+        json_data = get_json(person_url)
+
+        person = Person()
+        if 'detail' in json_data:
+            person.name = json_data["name"]
+            person.url = person_url
+            person.height = json_data["height"]
+            person.mass = json_data["mass"]
+            person.hair_color = json_data["hair_color"]
+            person.skin_color = json_data["skin_color"]
+
+            db.save(person)
+
+for planet in range(1,10):
+    planet_url = 'https://swapi.co/api/planets/{}'.format(planet)
+    results = db.open().query(Planet).filter(Planet.url == planet_url).all()
+    if len(results) == 0:
     
-    json_data = get_json(person_url)
+        json_data = get_json(planet_url)
 
-    person = Person()
+        planet = Planet()
     
-    person.url = person_url
-    person.name = json_data["name"]
-    person.height = json_data["height"]
-    person.mass = json_data["mass"]
-    person.hair_color = json_data["hair_color"]
-    person.skin_color = json_data["skin_color"]
+        planet.name = json_data["name"]
+        planet.url = planet_url
+        planet.rotation_period = json_data["rotation_period"]
+        planet.orbital_period = json_data["orbital_period"]
+        planet.diameter = json_data["diameter"]
+        planet.climate = json_data["climate"]
 
-    db.save(person)
-
-
-planet_url = 'https://swapi.co/api/planets/1'
-results = db.open().query(Planet).filter(Planet.url == planet_url)
-if len(results) == 0:
-    
-    json_data = get_json(planet_url)
-
-    planet = Planet()
-    
-    planet.name = json_data["name"]
-    planet.url = planet_url
-    planet.rotation_period = json_data["rotation_period"]
-    planet.orbital_period = json_data["orbital_period"]
-    planet.diameter = json_data["diameter"]
-    planet.climate = json_data["climate"]
-
-    db.save(planet)
+        db.save(planet)
 
 
 vehicle_url = 'https://swapi.co/api/vehicles/14'
-results = db.open().query(Vehicle).filter(Vehicle.url == vehicle_url)
+results = db.open().query(Vehicle).filter(Vehicle.url == vehicle_url).all()
 if len(results) == 0:
     
     json_data = get_json(vehicle_url)
@@ -66,7 +67,7 @@ if len(results) == 0:
 
 
 starship_url = 'https://swapi.co/api/starships/12'
-results = db.open().query(Starship).filter(Starship.url == starship_url)
+results = db.open().query(Starship).filter(Starship.url == starship_url).all()
 if len(results) == 0:
     
     json_data = get_json(starship_url)
@@ -84,7 +85,7 @@ if len(results) == 0:
 
 
 species_url = 'https://swapi.co/api/species/1'
-results = db.open().query(Species).filter(Species.url == species_url)
+results = db.open().query(Species).filter(Species.url == species_url).all()
 if len(results) == 0:
     
     json_data = get_json(species_url)
