@@ -19,11 +19,12 @@ class Person(Base):
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
     def parse_person(self, json_data):
-        
-
-
-    
-
+        self.name = json_data['name']
+        self.url = json_data['url']
+        self.height = json_data['height']
+        self.mass = json_data['mass']
+        self.hair_color = json_data['hair_color']
+        self.skin_color = json_data['skin_color']
 
 
 class Planet(Base):
@@ -41,6 +42,14 @@ class Planet(Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
+    def parse_planet(self, json_data):
+        self.name = json_data['name']
+        self.url = json_data['url']
+        self.rotation_period = json_data['rotation_period']
+        self.orbital_period = json_data['orbital_period']
+        self.diameter = json_data['diameter']
+        self.climate = json_data['climate']
+
 
 class Vehicle(Base):
     __tablename__ = 'vehicle'
@@ -57,6 +66,13 @@ class Vehicle(Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
+    def parse_vehicle(self, json_data):
+        self.name = json_data['name']
+        self.url = json_data['url']
+        self.model = json_data['model']
+        self.manufacturer = json_data['manufacturer']
+        self.cost_in_credits = json_data['cost_in_credits']
+        self.length = json_data['length']
 
 class Starship(Base):
     __tablename__ = 'starship'
@@ -73,6 +89,13 @@ class Starship(Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
+    def parse_starship(self, json_data):
+        self.name = json_data['name']
+        self.url = json_data['url']
+        self.model = json_data['model']
+        self.manufacturer = json_data['manufacturer']
+        self.cost_in_credits = json_data['cost_in_credits']
+        self.length = json_data['length']
 
 class Species(Base):
     __tablename__ = 'species'
@@ -88,6 +111,14 @@ class Species(Base):
     
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+
+    def parse_species(self, json_data):
+        self.name = json_data['name']
+        self.url = json_data['url']
+        self.classification = json_data['classification']
+        self.designation = json_data['designation']
+        self.average_height = json_data['average_height']
+        self.skin_colors = json_data['skin_colors']
 
 if __name__ != '__main__':
     create_tables()
