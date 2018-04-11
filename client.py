@@ -11,7 +11,7 @@ def get_json(url):
     response = requests.get(url)
     return json.loads(response.text)
 
-for i in range(1,87):
+def get_person(i):
     person_url = 'https://swapi.co/api/people/{}/'.format(i)
     results = db.open().query(Person).filter(Person.url == person_url).all()
     if len(results) == 0:   
@@ -24,7 +24,8 @@ for i in range(1,87):
 
             db.save(person)
 
-for i in range(1,61):
+
+def get_planet(i):
     planet_url = 'https://swapi.co/api/planets/{}/'.format(i)
     results = db.open().query(Planet).filter(Planet.url == planet_url).all()
     if len(results) == 0:
@@ -37,7 +38,7 @@ for i in range(1,61):
 
             db.save(planet)
 
-for i in range(1,39):
+def get_vehicle(i):
     vehicle_url = 'https://swapi.co/api/vehicles/{}/'.format(i)
     results = db.open().query(Vehicle).filter(Vehicle.url == vehicle_url).all()
     if len(results) == 0:
@@ -50,7 +51,7 @@ for i in range(1,39):
     
             db.save(vehicle)
 
-for i in range(1,37):
+def get_starship(i):
     starship_url = 'https://swapi.co/api/starships/{}/'.format(i)
     results = db.open().query(Starship).filter(Starship.url == starship_url).all()
     if len(results) == 0:
@@ -63,7 +64,7 @@ for i in range(1,37):
 
             db.save(starship)
 
-for i in range(1,37):
+def get_species(i):
     species_url = 'https://swapi.co/api/species/{}/'.format(i)
     results = db.open().query(Species).filter(Species.url == species_url).all()
     if len(results) == 0:
