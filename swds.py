@@ -4,39 +4,46 @@ from pprint import pprint
 from sw_entities import Person, Planet, Vehicle, Starship, Species
 from base import DbManager
 
-db = DbManager()
-
-def get_json(url):
-    print("GET\t<{}>".format(url))
-    response = requests.get(url)
-    return json.loads(response.text)
-
-def get_person(i):
-    person_url = 'https://swapi.co/api/people/{}/'.format(i)
-    results = db.open().query(Person).filter(Person.url == person_url).all()
-    if len(results) == 0:   
-        
-        json_data = get_json(person_url)
-
-        person = Person()
-        if 'detail' not in json_data:
-            person.parse_person(json_data)
-
-            db.save(person)
 
 
-def get_planet(i):
-    planet_url = 'https://swapi.co/api/planets/{}/'.format(i)
-    results = db.open().query(Planet).filter(Planet.url == planet_url).all()
-    if len(results) == 0:
+class SWDS:
+    def __init__(self):
+        self.db = DbManager()
+
+    def get_json(self, url):
+        print("GET\t<{}>".format(url))
+        response = requests.get(url)
+        return json.loads(response.text)
     
-        json_data = get_json(planet_url)
+    def get_person(self, i):
+        person_url = 'https://swapi.co/api/people/{}/'.format(i)
+        results = self.db.open().query(Person).filter(Person.url == person_url).all()
+        if len(results) == 0:   
+            
+            json_data = self.get_json(person_url)
 
-        planet = Planet()
-        if 'detail' not in json_data:
-            planet.parse_planet(json_data)
+            person = Person()
+            if 'detail' not in json_data:
+                person.parse_person(json_data)
 
-            db.save(planet)
+                return self.db.save(person)
+        else:
+            return results[0]
+
+    def get_planet(self, i):
+        planet_url = 'https://swapi.co/api/planets/{}/'.format(i)
+        results = self.db.open().query(Planet).filter(Planet.url == planet_url).all()
+        if len(results) == 0:
+        
+            json_data = self.get_json(planet_url)
+
+            planet = Planet()
+            if 'detail' not in json_data:
+                planet.parse_planet(json_data)
+
+                self.db.save(planet)
+        else:
+            return results[0]
 
 def get_vehicle(i):
     vehicle_url = 'https://swapi.co/api/vehicles/{}/'.format(i)
@@ -50,6 +57,14 @@ def get_vehicle(i):
             vehicle.parse_vehicle(json_data)
     
             db.save(vehicle)
+
+
+
+
+
+
+
+
 
 def get_starship(i):
     starship_url = 'https://swapi.co/api/starships/{}/'.format(i)
