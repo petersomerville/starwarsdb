@@ -11,8 +11,8 @@ def get_json(url):
     response = requests.get(url)
     return json.loads(response.text)
 
-for person in range(20,30):
-    person_url = 'https://swapi.co/api/people/{}/'.format(person)
+for i in range(1,87):
+    person_url = 'https://swapi.co/api/people/{}/'.format(i)
     results = db.open().query(Person).filter(Person.url == person_url).all()
     if len(results) == 0:   
         
@@ -24,8 +24,8 @@ for person in range(20,30):
 
             db.save(person)
 
-for planet in range(1,10):
-    planet_url = 'https://swapi.co/api/planets/{}/'.format(planet)
+for i in range(1,61):
+    planet_url = 'https://swapi.co/api/planets/{}/'.format(i)
     results = db.open().query(Planet).filter(Planet.url == planet_url).all()
     if len(results) == 0:
     
@@ -37,7 +37,7 @@ for planet in range(1,10):
 
             db.save(planet)
 
-for i in range(14,24):
+for i in range(1,39):
     vehicle_url = 'https://swapi.co/api/vehicles/{}/'.format(i)
     results = db.open().query(Vehicle).filter(Vehicle.url == vehicle_url).all()
     if len(results) == 0:
@@ -50,29 +50,29 @@ for i in range(14,24):
     
             db.save(vehicle)
 
-
-starship_url = 'https://swapi.co/api/starships/12'
-results = db.open().query(Starship).filter(Starship.url == starship_url).all()
-if len(results) == 0:
+for i in range(1,37):
+    starship_url = 'https://swapi.co/api/starships/{}/'.format(i)
+    results = db.open().query(Starship).filter(Starship.url == starship_url).all()
+    if len(results) == 0:
     
-    json_data = get_json(starship_url)
+        json_data = get_json(starship_url)
 
-    starship = Starship()
-    if 'detail' not in json_data:
-        starship.parse_starship(json_data)
+        starship = Starship()
+        if 'detail' not in json_data:
+            starship.parse_starship(json_data)
 
-        db.save(starship)
+            db.save(starship)
 
+for i in range(1,37):
+    species_url = 'https://swapi.co/api/species/{}/'.format(i)
+    results = db.open().query(Species).filter(Species.url == species_url).all()
+    if len(results) == 0:
+        
+        json_data = get_json(species_url)
 
-species_url = 'https://swapi.co/api/species/1'
-results = db.open().query(Species).filter(Species.url == species_url).all()
-if len(results) == 0:
-    
-    json_data = get_json(species_url)
-
-    species = Species()
-    if 'detail' not in json_data:
-        species.parse_species(json_data)
-    
-        db.save(species)
+        species = Species()
+        if 'detail' not in json_data:
+            species.parse_species(json_data)
+        
+            db.save(species)
 
