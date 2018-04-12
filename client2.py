@@ -1,9 +1,9 @@
-from swds import SWDS, Person, Planet
+from swds import SWDS, Person, Planet, Vehicle, Starship, Species
 from pprint import pprint
 
 swds = SWDS()
 
-for i in range(1,9):
+for i in range(1,10):
     results = swds.get_json("https://swapi.co/api/people/?page={}".format(i))
     people_array = results['results']
     for person_dict in people_array:
@@ -22,3 +22,33 @@ for i in range(1,8):
         thing = swds.db.open().query(Planet).filter(Planet.url == planet.url).all()
         if len(thing) == 0:
             swds.db.save(planet)
+
+for i in range(1,5):
+    results = swds.get_json("https://swapi.co/api/vehicles/?page={}".format(i))
+    vehicles_array = results['results']
+    for vehicle_dict in vehicles_array:
+        vehicle = Vehicle()
+        vehicle.parse_vehicle(vehicle_dict)
+        thing = swds.db.open().query(Vehicle).filter(Vehicle.url == vehicle.url).all()
+        if len(thing) == 0:
+            swds.db.save(vehicle)
+
+for i in range(1,5):
+    results = swds.get_json("https://swapi.co/api/starships/?page={}".format(i))
+    starships_array = results['results']
+    for starship_dict in starships_array:
+        starship = Starship()
+        starship.parse_starship(starship_dict)
+        thing = swds.db.open().query(Starship).filter(Starship.url == starship.url).all()
+        if len(thing) == 0:
+            swds.db.save(starship)
+
+for i in range(1,5):
+    results = swds.get_json("https://swapi.co/api/species/?page={}".format(i))
+    species_array = results['results']
+    for species_dict in species_array:
+        species = Species()
+        species.parse_species(species_dict)
+        thing = swds.db.open().query(Species).filter(Species.url == species.url).all()
+        if len(thing) == 0:
+            swds.db.save(species)
